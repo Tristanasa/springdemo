@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link href="css/default.css" rel="stylesheet" type="text/css" />
+    <!--引入 ECharts 文件-->
+    <script type="text/javascript" src='js/echarts.js'></script>
+    <!--引用jQuery-->
+    <script type="text/javascript" src="js/jquery-3.3.1.min"></script>
+    <!--引用bootstrap-->
+    <link rel="stylesheet" href="css/bootstrap-min.css" type="text/css"/>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+</head>
+<body>
+<!-- start header -->
+<div id="logo">
+		<p> <a href="index.html">Login</a> &nbsp;&nbsp;<a href ="register.html">Register</a></p>
+</div>
+
+
+<div id="page">
+	
+	<!-- start content -->
+	
+		<!-- start score -->
+		<div id="score" class="post">
+			<h2 class="title">Assignment Score Distribution</h2>
+			<div class="entry"></div>
+			<div id="multi" style="width:250px; height:250px;float: left; padding-top: 30px;"></div>
+			<div id="match" style="width:250px; height:250px; float: left; padding-top: 30px;"></div>
+			<div id="fill" style="width:250px; height:250px; float: left; padding-top: 30px;"></div>
+		</div>
+		<!-- end score -->
+
+		<!-- start filters -->
+		<div id="filters">
+			<div class="post">
+
+			<ul id="myTab" class="nav nav-tabs">
+				<li class="active">
+					<a href="#major" data-toggle="tab">
+			 			Major
+					</a>
+				</li>
+				<li><a href="#class" data-toggle="tab">Class</a></li>
+				<li>
+					<a href="#gender" data-toggle="tab">Gender</a>
+				</li>
+			</ul>
+
+			<div id="myTabContent" class="tab-content">
+				<div class="tab-pane fade in active" id="major">
+					<div id="fmajor" style="width:230px; height:230px;"></div>
+				</div>
+				<div class="tab-pane fade" id="gender">
+					<div id="fgender" style="width:230px; height:230px;"></div>
+				</div>
+				<div class="tab-pane fade" id="class">
+					<div id="fclass" style="width:230px; height:230px;"></div>
+				</div>
+			</div>
+
+				<div class="entry">
+					
+				</div>
+			</div>	
+		</div>
+		<!-- end filters -->
+		<!--start comparision-->
+		<div id="comparision">
+			<div class="post">
+				<h2 class="title">Comparisions</h2>
+				<div class="entry"></div>
+				<div id="average" style="width:400px; height:300px;"></div>
+			</div>	
+		</div>
+		<!-- end comparision -->
+	
+	<!-- end content -->
+</div>
+</body>
+<!--柱状图-->
+<script type="text/javascript">
+    // 初始化图表标签
+    var myChart = echarts.init(document.getElementById('multi'));
+    var options={
+        //定义一个标题
+        title:{
+            text:'multiple-choice tests'
+        },
+        legend:{
+            data:['number of students']
+        },
+        //X轴设置
+        xAxis:{
+            data:['F','D','C','B','A']
+        },
+        yAxis:{
+        },
+        //name=legend.data的时候才能显示图例
+        series:[{
+            name:'销量',
+            type:'bar',
+            data:['12','32','45','71','60']
+        }]
+ 
+    };
+    myChart.setOption(options);
+</script>
+<script type="text/javascript">
+    // 初始化图表标签
+    var myChart = echarts.init(document.getElementById('fill'));
+    var options={
+        //定义一个标题
+        title:{
+            text:'fill-in blanks exercises'
+        },
+        //legend:{
+        //    data:['number of students']
+        //},
+        //X轴设置
+        xAxis:{
+            data:['F','D','C','B','A']
+        },
+        yAxis:{
+        },
+        //name=legend.data的时候才能显示图例
+        series:[{
+            name:'number of students',
+            type:'bar',
+            data:['30','35','45','70','40']
+        }]
+ 
+    };
+    myChart.setOption(options);
+</script>
+<script type="text/javascript">
+    // 初始化图表标签
+    var myChart = echarts.init(document.getElementById('match'));
+    var options={
+        //定义一个标题
+        title:{
+            text:'matching exercises'
+        },
+        //legend:{
+        //    data:['number of students']
+        //},
+        //X轴设置
+        xAxis:{
+            data:['F','D','C','B','A']
+        },
+        yAxis:{
+        },
+        //name=legend.data的时候才能显示图例
+        series:[{
+            name:'number of students',
+            type:'bar',
+            data:['20','50','30','65','55']
+        }]
+ 
+    };
+    myChart.setOption(options);
+</script>
+<!--major filter 饼图-->
+<script type="text/javascript">
+   var myChart = echarts.init(document.getElementById('fmajor'));
+    var options={
+        //定义一个标题
+       // title:{
+       //     text:'Major'
+        //},
+      
+        //name=legend.data的时候才能显示图例
+        series : [
+             {
+                 name:'课程内容分布',
+                 type:'pie',
+                 clockwise:'true',
+                 startAngle:'0',
+                 radius : '47%',
+                 center: ['54%', '60%'],
+                 data:[
+                    {
+                         value:70,
+                         name:'major 1',
+                         itemStyle:{
+                         	normal:{
+                         		color:'rgb(255,192,0)',
+                                //shadowBlur:'90',
+                               // shadowColor:'rgba(0,0,0,0.8)',
+                               // shadowOffsetY:'30'
+                            }
+                         }
+                    },
+                    {
+                    	value:90,
+                    	name:'major 2',
+                    	itemStyle:{
+                    		normal:{
+                    			color:'rgb(1,175,80)'
+                    		}
+                    	}
+                    },
+                    {
+                    	value:60,
+                    	name:'major 3',
+                    	itemStyle:{
+                    		normal:{
+                    			color:'#FF4040'
+                    		}
+                    	}
+                    }
+                 ],
+             }
+         ]
+
+ 
+    };
+    myChart.setOption(options);
+</script>
+<!--gender filter饼图-->
+<script type="text/javascript">
+   var myChart = echarts.init(document.getElementById('fgender'));
+    var options={
+        //定义一个标题
+       // title:{
+       //     text:'Major'
+        //},
+      
+        //name=legend.data的时候才能显示图例
+        series : [
+             {
+                 name:'课程内容分布',
+                 type:'pie',
+                 clockwise:'true',
+                 startAngle:'0',
+                 radius : '47%',
+                 center: ['54%', '60%'],
+                 data:[
+                    {
+                         value:120,
+                         name:'male',
+                         itemStyle:{
+                         	normal:{
+                         		color:'#4169E1',
+                                //shadowBlur:'90',
+                               // shadowColor:'rgba(0,0,0,0.8)',
+                               // shadowOffsetY:'30'
+                            }
+                         }
+                    },
+                    {
+                    	value:100,
+                    	name:'female',
+                    	itemStyle:{
+                    		normal:{
+                    			color:'#FF4040'
+                    		}
+                    	}
+                    }
+                 ],
+             }
+         ]
+
+ 
+    };
+    myChart.setOption(options);
+</script>
+<!--定义comparison的折线图-->
+<script type="text/javascript">
+	var myChart = echarts.init(document.getElementById('average'));
+	var options = {
+    	title : {
+        text: 'Latest standardized math assessment median score',
+        subtext: 'major comparision'
+    	},
+    	tooltip : {
+        trigger: 'axis'
+    	},
+    	legend: {
+        	data:['major 1','major 2','major 3']
+    	},
+    	toolbox: {
+        	show : true,
+        	feature : {
+            	mark : {show: true},
+            	dataView : {show: true, readOnly: false},
+            	magicType : {show: true, type: ['line', 'bar']},
+            	restore : {show: true},
+            	saveAsImage : {show: true}
+        	}
+    	},
+    	calculable : true,
+    	xAxis : [
+        	{
+            	type : 'category',
+            	boundaryGap : true,
+            	data : ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+        	}
+    	],
+    	yAxis : [
+        	{
+            	type : 'value',
+            	axisLabel : {
+                	formatter: '{value} %'
+            	}
+        	}
+    	],
+    	series : [
+        	{
+            	name:'major 1',
+            	type:'line',
+            	data:[67, 88, 80, 50, 68, 77, 70],
+            	markPoint : {
+                	data : [
+                    	{type : 'max', name: 'max score'},
+                    	{type : 'min', name: 'min score '}
+                	]
+            	},
+            	markLine : {
+                	data : [
+                    	{type : 'average', name: 'average score'}
+                	]
+            	}
+        	},
+        	{
+            	name:'major 2',
+            	type:'line',
+            	data:[88, 90, 79, 77, 87, 86, 80],
+            	//markPoint : {
+                	//data : [
+                    	//{name : '周最低', value : -2, xAxis: 1, yAxis: -1.5}
+                	//]
+            	//},
+            	markLine : {
+                	data : [
+                    	{type : 'average', name : 'average score'}
+                	]
+            	}
+        	}
+        	{
+            	name:'major 3',
+            	type:'line',
+            	data:[86, 80, 75, 80, 69, 78, 93],
+            	//markPoint : {
+                	//data : [
+                    	//{name : '周最低', value : -2, xAxis: 1, yAxis: -1.5}
+                	//]
+            	//},
+            	markLine : {
+                	data : [
+                    	{type : 'average', name : 'average score'}
+                	]
+            	}
+        	}
+    	]
+	};
+	myChart.setOption(options);
+
+</script>
+<!--改变filter事件-->
+<script type="text/javascript">
+	function fselect(){
+		var val = $("#filter").val();
+		$("#option div").hide();
+		$("#" + val + " ").show();
+	}
+</script>
+<!--改变filter事件的另一种尝试-->
+
+</html>
+
