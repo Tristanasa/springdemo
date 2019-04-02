@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <title>Dashboard for the evaluation of students</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/dashboard.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="js/ie-emulation-modes-warning.js"></script>
+    <!-- 引入echarts Macaron主题 -->
+    <script src="js/macarons.js"></script>
+    <script src="js/echarts.js"></script>
+    <script src="js/shine.js"></script>
+
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Dashboard</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Help</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
+            <li><a href="#">Reports</a></li>
+            <li><a href="#">Analytics</a></li>
+            <li><a href="#">Export</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <h1 class="page-header"> Filter</h1>
+
+          <div class="row placeholders">
+            <div id="students" style="width: 300px;height:300px;float: left;">
+              <!-- 饼图 -->
+            </div>
+            <div id="activity" style="width: 600px;height: 400px;float: left;">
+              <!-- 4个横着的摞起来的条形图 -->
+            </div>
+            
+          </div>
+
+          <h2 class="sub-header">Section title</h2>
+          <div class="table-responsive">
+            <div id="score-PD1" style="width: 800px;height: 200px;">
+              <!-- 4个横着的摞起来的折线图 -->
+            </div>
+            <div id="score-PD2" style="width: 800px;height: 200px;">
+              <!-- 4个横着的摞起来的折线图 -->
+            </div>
+            <div id="score-EM" style="width: 800px;height: 200px;">
+              <!-- 4个横着的摞起来的折线图 -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- 放饼图图表 -->
+    <script type="text/javascript">
+      var chart = echarts.init(document.getElementById('students'),'macarons');
+      var option = {
+        title : {
+          text: 'major',
+          subtext: '',
+          x: 'center'
+        },
+        tooltip : {
+          trigger: 'item',
+          formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend : {
+          orient: 'vertical',
+          left: 'left',
+          data: ['EC', 'TeL', 'IoT']
+        },
+        series : [
+        {
+          name: 'major',
+          type: 'pie',
+          radius: '55%',
+          center: ['50%', '60%'],
+          selectedMode: 'single',
+          data:[
+            {value:189, name: 'EC'},
+            {value:170, name: 'TeL'},
+            {value:158, name: 'IoT'}
+          ],
+          itemStyle: {
+            emphasis: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0,0,0,0.5)'
+            }
+          }
+        }
+        ]
+      };
+      chart.setOption(option);
+
+      //加载数据
+//      $.get('data.json').done(function (data){
+//        //填入数据
+//        chart.setOption({
+//          legend: {
+//            data: data.legend
+//          },
+//          series: [{
+//            name: 'major',
+//            data: data.series
+//          }]
+//        });
+//      });
+
+    </script>
+    <!-- 放四个叠在一起的横着的条形图 -->
+    <script type="text/javascript">
+      var chart1 = echarts.init(document.getElementById('activity'), 'macarons');
+      var option1 = {
+        title : {
+          text: 'Average scores of each activity weekly',
+          subtext: '',
+          x: 'center'
+        },
+        tooltip : {//提示框组件
+          trigger: 'axis',//坐标轴触发
+          axisPointer: {//坐标轴指示器：指示坐标轴当前刻度的工具
+            type: 'shadow'//阴影指示器
+          }
+        },
+        legend : {//图例组件：就是彩色的条条都是谁
+          data: ['','', 'multiple-choice test', 'matching exercise', 'fill-in blank exercise']
+        },
+        grid : {//直角坐标系内绘图网格
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true//grid组件离容器左侧的距离
+        },
+        toolbox : {//工具栏组件
+          show: true,//显示工具栏组件
+          feature: {
+            saveAsImage: {}
+          }
+        },
+        xAxis : {
+          type: 'value',
+          name: 'scores',
+          boundaryGap: [0, 0.01]
+        },
+        yAxis: {
+          type: 'category',
+          data: ['week 1', 'week 2', 'week 3', 'week 4']
+        },
+        series : [
+          {
+            name: 'multiple-choice test',
+            type: 'bar',
+            data: [69,78,88,85],
+          },
+          {
+            name: 'matching exercise',
+            type: 'bar',
+            data: [78,88,79,90],
+          },
+          {
+            name: 'fill-in blank exercise',
+            type: 'bar',
+            data: [88,85,68,78],
+          }
+        ]
+      };
+      chart1.setOption(option1);
+    </script>
+    <script type="text/javascript">
+      var chart2 = echarts.init(document.getElementById('score-PD1'),'macarons');
+      var option2 = {
+        title : {
+          text: 'Average scores of each major in Product Development and Management',
+          subtext: 'Weekly scores are displayed\n\n\n',
+          x: 'center'
+        },
+        tooltip : {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
+        },
+        legend : {
+          orient: 'vertical',
+          right: 'right',
+          data: ['','EC', 'TeL', 'IoT']
+        },
+        grid : {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        toolbox : {
+          show: true,
+          //feature: {
+          //  saveAsImage:{}
+          //}
+        },
+        xAxis : {
+          type: 'category',
+          boundaryGap: false,
+          data: ['week 1', 'week 2', 'week 3', 'week 4']
+        },
+        yAxis: [
+        {
+          type: 'value',
+          min: function(value) {
+            return value.min - 5;
+          }
+        }
+        ],
+        series : [
+          /*{
+            name: 'EC',
+            type: 'line',
+            data: [85, 86, 77, 89]
+          },
+          {
+            name: 'TeL',
+            type: 'line',
+            data: [90, 76, 78, 81]
+          },*/
+          {
+            name: 'IoT',
+            type: 'line',
+            data: [89, 93, 92, 87]
+          }          
+        ]
+      };
+      chart2.setOption(option2);
+    </script>
+    <script type="text/javascript">
+      var chart3 = echarts.init(document.getElementById('score-PD2'),'macarons');
+      var option3 = {
+        title : {
+          text: 'Average scores of each major in Product Development and Marketing',
+          subtext: 'Weekly scores are displayed\n\n\n',
+          x: 'center'
+        },
+        tooltip : {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
+        },
+        legend : {
+          orient: 'vertical',
+          right: 'right',
+          data: ['','EC', 'TeL', 'IoT']
+        },
+        grid : {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        toolbox : {
+          show: true,
+          //feature: {
+          //  saveAsImage:{}
+          //}
+        },
+        xAxis : {
+          type: 'category',
+          boundaryGap: false,
+          data: ['week 1', 'week 2', 'week 3', 'week 4']
+        },
+        yAxis: [
+        {
+          type: 'value',
+          min: function(value) {
+            return value.min - 5;
+          }
+        }
+        ],
+        series : [
+          {
+            name: 'EC',
+            type: 'line',
+            data: [85, 86, 77, 89]
+          },
+          {
+            name: 'TeL',
+            type: 'line',
+            data: [90, 76, 78, 81]
+          },
+          /*{
+            name: 'IoT',
+            type: 'line',
+            data: [89, 93, 92, 87]
+          }*/          
+        ]
+      };
+      chart3.setOption(option3);
+    </script>
+    <script type="text/javascript">
+      var chart4 = echarts.init(document.getElementById('score-EM'),'macarons');
+      var option4 = {
+        title : {
+          text: 'Average scores of each major in Enterprise Management',
+          subtext: 'Weekly scores are displayed\n\n\n',
+          x: 'center'
+        },
+        tooltip : {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
+        },
+        legend : {
+          orient: 'vertical',
+          right: 'right',
+          data: ['','EC', 'TeL', 'IoT']
+        },
+        grid : {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        toolbox : {
+          show: true,
+          //feature: {
+          //  saveAsImage:{}
+          //}
+        },
+        xAxis : {
+          type: 'category',
+          boundaryGap: false,
+          data: ['week 1', 'week 2', 'week 3', 'week 4']
+        },
+        yAxis: [
+        {
+          type: 'value',
+          min: function(value) {
+            return value.min - 5;
+          }
+        }
+        ],
+        series : [
+          {
+            name: 'EC',
+            type: 'line',
+            data: [85, 86, 77, 89]
+          },
+          {
+            name: 'TeL',
+            type: 'line',
+            data: [90, 76, 78, 81]
+          },
+          {
+            name: 'IoT',
+            type: 'line',
+            data: [89, 93, 92, 87]
+          }          
+        ]
+      };
+      chart4.setOption(option4);
+    </script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
